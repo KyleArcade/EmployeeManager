@@ -1,0 +1,25 @@
+<app-employee-search (employeeSelected)="addEmployeeToGrid($event)"></app-employee-search>
+<div class="grid-container">
+  @if (selectedEmployees.length > 0) {
+  <mat-grid-list cols="3" rowHeight="120px" gutterSize="16px">
+    @for (emp of selectedEmployees; track emp.id) {
+    <mat-grid-tile>
+      <mat-card class="employee-tile-card">
+        <div class="card-content-layout">
+          <div class="employee-details">
+            <h3>{{ emp.firstName }} {{ emp.lastName }}</h3>
+            <p class="role-stub">Team Member</p>
+          </div>
+
+          <button mat-icon-button color="warn" (click)="removeEmployeeFromGrid(emp)" aria-label="Delete employee">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+    }
+  </mat-grid-list>
+  } @else {
+  <p class="empty-message">No employees selected yet. Search and select above to add them to your grid.</p>
+  }
+</div>

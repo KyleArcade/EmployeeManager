@@ -41,4 +41,18 @@ public static class DataExtensions
     {
         builder.Services.AddAutoMapper(typeof(EmployeeMappingProfile));
     }
+
+    public static void AddCors(this WebApplicationBuilder builder, string allowSpecificOrigins)
+    {
+        builder.Services.AddCors(options =>
+        {
+             options.AddPolicy(name: allowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+        });
+    }
 }
