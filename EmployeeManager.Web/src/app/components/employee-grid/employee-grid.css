@@ -1,0 +1,71 @@
+.grid-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 0 16px;
+  
+}
+
+.employee-tile-card {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  overflow: hidden;
+  border: #d21951 2px solid;
+}
+
+.card-content-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.employee-details h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.role-title {
+  color: #d21951;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin: 0 0 12px 0;
+}
+
+.role-stub {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 4px 0 0 0;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #555;
+  font-size: 1.0rem;
+  margin: 4px 0;
+}
+
+.mini-icon {
+  transform: scale(0.70);
+  width: 24px;
+  height: 18px;
+  line-height: 18px;
+  color: #777;
+}
+
+.remove-button {
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+}

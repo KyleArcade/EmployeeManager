@@ -1,29 +1,23 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, ChangeDetectorRef  } from '@angular/core';
 import { EmployeeSearchComponent } from './components/employee-search/employee-search';
+import { EmployeeGrid } from './components/employee-grid/employee-grid';
 import { Employee, EmployeeService } from './services/employee.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule,
-    MatGridListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    EmployeeSearchComponent],
+    EmployeeSearchComponent,
+    EmployeeGrid],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
 export class App {
   selectedEmployees: Employee[] = [];
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private employeeService: EmployeeService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   addEmployeeToGrid(id: number): void {
     // Prevent adding the exact same employee twice.
@@ -33,7 +27,8 @@ export class App {
     
     this.employeeService.getEmployeeById(id).subscribe({
       next: (fullEmployeeProfile) => {
-        this.selectedEmployees.push(fullEmployeeProfile);
+        this.selectedEmployees = [...this.selectedEmployees, fullEmployeeProfile];
+        this.cdr.detectChanges(); 
       },
       error: (err) => console.error('Failed to fetch rich profile data', err)
     });
@@ -43,5 +38,6 @@ export class App {
     this.selectedEmployees = this.selectedEmployees.filter(
       employee => employee.id !== id
     );
+    this.cdr.detectChanges();
   }
 }

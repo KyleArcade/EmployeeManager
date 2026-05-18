@@ -1,9 +1,11 @@
 .search-container {
-  padding: 20px;
-  max-width: 400px;
-  align-items: center;
+  max-width: 1000px; /* Matches your grid layout container width */
+  margin: 40px auto 20px auto; /* Centers the card on the page with breathing room */
+  padding: 16px; 
+  box-sizing: border-box;
 }
 
 .search-field {
   width: 100%;
+  margin-top: 100px; 
 }
