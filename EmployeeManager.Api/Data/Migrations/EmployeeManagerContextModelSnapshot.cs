@@ -38,8 +38,9 @@ namespace EmployeeManager.Api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("Phone")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

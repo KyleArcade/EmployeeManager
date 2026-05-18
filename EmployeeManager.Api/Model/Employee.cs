@@ -14,7 +14,7 @@ public class Employee
     /// <param name="email">The employee's email address.</param>
     [SetsRequiredMembers]
     private Employee(string firstName, string lastName,
-        string jobTitle, long phone, string email)
+        string jobTitle, string phone, string email)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -32,7 +32,7 @@ public class Employee
     /// <param name="phone">The employee's phone number.</param>
     /// <param name="email">The employee's email address.</param>
     public static Employee Create(string firstName, string lastName,
-        string jobTitle, long phone, string email)
+        string jobTitle, string phone, string email)
     {
         return new Employee(firstName, lastName, jobTitle, phone, email);
     }
@@ -46,7 +46,7 @@ public class Employee
     /// <param name="phone">The employee's phone number.</param>
     /// <param name="email">The employee's email address.</param>
     public void Update(string firstName, string lastName,
-        string jobTitle, long phone, string email)
+        string jobTitle, string phone, string email)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -79,7 +79,7 @@ public class Employee
     /// The employee's phone number.
     /// Optional.
     /// </summary>
-    public long Phone { get; set; }
+    public string Phone { get; set; }
 
     /// <summary>
     /// The employee's email address.

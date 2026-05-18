@@ -5,7 +5,7 @@
 namespace EmployeeManager.Api.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialDbCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace EmployeeManager.Api.Data.Migrations
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     JobTitle = table.Column<string>(type: "TEXT", nullable: false),
-                    Phone = table.Column<long>(type: "INTEGER", nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

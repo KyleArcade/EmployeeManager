@@ -5,6 +5,6 @@ public record class EmployeeDto(
     string FirstName,
     string LastName,
     string JobTitle,
-    long Phone,
+    string Phone,
     string Email
 );

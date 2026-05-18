@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManager.Api.Data.Migrations
 {
     [DbContext(typeof(EmployeeManagerContext))]
-    [Migration("20260516115152_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260518154404_InitialDbCreate")]
+    partial class InitialDbCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,8 +41,9 @@ namespace EmployeeManager.Api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("Phone")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
