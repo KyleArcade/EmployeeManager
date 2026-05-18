@@ -1,0 +1,34 @@
+GET http://localhost:5063/employees
+
+###
+GET http://localhost:5063/employees/search?name=al
+
+###
+GET http://localhost:5063/employees/13
+
+###
+POST http://localhost:5063/employees
+Content-Type: application/json
+
+{
+    "firstName": "Paul",
+    "lastName": "Tall",
+    "jobTitle": "Developer",
+    "phone": "07722543768",
+    "email": "paul.tall@exmaple.com"
+}
+
+###
+PUT http://localhost:5063/employees/13
+Content-Type: application/json
+
+{
+    "firstName": "Paul",
+    "lastName": "Short",
+    "jobTitle": "Senior Developer",
+    "phone": "07722543768",
+    "email": "paul.short@exmaple.com"
+}
+
+###
+DELETE http://localhost:5063/employees/13
