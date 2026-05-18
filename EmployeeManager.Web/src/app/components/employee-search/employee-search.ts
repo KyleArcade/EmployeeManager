@@ -26,7 +26,7 @@ import { EmployeeService, Employee } from '../../services/employee.service';
   styleUrls: ['./employee-search.css']
 })
 export class EmployeeSearchComponent {
-  @Output() employeeSelected = new EventEmitter<Employee>();
+  @Output() employeeSelected = new EventEmitter<number>();
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
   searchTerm: string = '';
@@ -76,7 +76,7 @@ export class EmployeeSearchComponent {
     const foundEmployee = this.employees.find(e => `${e.firstName} ${e.lastName}` === selectedName);
     
     if (foundEmployee) {
-      this.employeeSelected.emit(foundEmployee);
+      this.employeeSelected.emit(foundEmployee.id);
       this.searchTerm = '';
       this.hasSearched = false;
       this.employees = [];

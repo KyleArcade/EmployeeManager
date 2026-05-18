@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EmployeeSearchComponent } from './components/employee-search/employee-search';
-import { Employee } from './services/employee.service';
+import { Employee, EmployeeService } from './services/employee.service';
 
 @Component({
   selector: 'app-root',
@@ -23,18 +23,25 @@ import { Employee } from './services/employee.service';
 export class App {
   selectedEmployees: Employee[] = [];
 
-  addEmployeeToGrid(employee: Employee): void {
+  constructor(private employeeService: EmployeeService) {}
+
+  addEmployeeToGrid(id: number): void {
     // Prevent adding the exact same employee twice.
-    const exists = this.selectedEmployees.some(e => e.id === employee.id);
+    const exists = this.selectedEmployees.some(employee => employee.id === id);
+
+    if (exists) return;
     
-    if (!exists) {
-      this.selectedEmployees.push(employee);
-    }
+    this.employeeService.getEmployeeById(id).subscribe({
+      next: (fullEmployeeProfile) => {
+        this.selectedEmployees.push(fullEmployeeProfile);
+      },
+      error: (err) => console.error('Failed to fetch rich profile data', err)
+    });
   }
 
-  removeEmployeeFromGrid(employeeToRemove: Employee): void {
+  removeEmployeeFromGrid(id: number): void {
     this.selectedEmployees = this.selectedEmployees.filter(
-      emp => !(emp.firstName === employeeToRemove.firstName && emp.lastName === employeeToRemove.lastName)
+      employee => employee.id !== id
     );
   }
 }
