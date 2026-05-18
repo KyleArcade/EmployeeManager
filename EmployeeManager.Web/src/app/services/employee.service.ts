@@ -26,4 +26,8 @@ export class EmployeeService {
     getEmployeeById(id: number): Observable<Employee> {
         return this.http.get<Employee>(`http://localhost:5063/employees/${id}`);
     }
+
+    createEmployee(employee: Omit<Employee, 'id'>): Observable<Employee> {
+        return this.http.post<Employee>('http://localhost:5063/employees', employee);
+    }
 }

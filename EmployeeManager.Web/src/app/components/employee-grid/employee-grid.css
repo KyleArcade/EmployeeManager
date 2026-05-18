@@ -9,9 +9,8 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  background-color: #fafafa;
   overflow: hidden;
-  border: #d21951 2px solid;
+  border: #fafafa 1px solid;
 }
 
 .card-content-layout {
@@ -33,7 +32,6 @@
 }
 
 .role-title {
-  color: #d21951;
   font-weight: 500;
   font-size: 0.9rem;
   margin: 0 0 12px 0;
@@ -49,7 +47,6 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #555;
   font-size: 1.0rem;
   margin: 4px 0;
 }
@@ -59,7 +56,6 @@
   width: 24px;
   height: 18px;
   line-height: 18px;
-  color: #777;
 }
 
 .remove-button {
@@ -68,4 +64,11 @@
   height: 32px;
   padding: 0;
   border-radius: 50%;
+}
+
+.empty-message{
+  text-align: center;
+  color: #999;
+  font-size: 1.2rem;
+  margin-top: 40px;
 }

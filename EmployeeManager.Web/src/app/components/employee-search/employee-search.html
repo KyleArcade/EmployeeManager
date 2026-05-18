@@ -1,36 +1,27 @@
 <div class="search-container">
-  <mat-form-field appearance="outline" class="search-field">
-    <mat-label>Search for a user...</mat-label>
-    <input 
-      type="text" 
-      matInput
-      #searchInput
-      #trigger="matAutocompleteTrigger"
-      [(ngModel)]="searchTerm"
-      (input)="onInputChange()"
-      [matAutocomplete]="auto"
-      placeholder="E.g John Doe">
-    
-    <button mat-button="filled"
-      matSuffix (click)="onSearch(trigger)"
-      [disabled]="searchTerm.trim().length < 2"
-      aria-label="Search">
-      <h2>GO!</h2>
-    </button>
+    <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search for a user...</mat-label>
+        <input type="text" matInput #searchInput #trigger="matAutocompleteTrigger" [(ngModel)]="searchTerm"
+            (input)="onInputChange()" [matAutocomplete]="auto" placeholder="E.g John Doe"
+            aria-label="Search">
 
-    <mat-autocomplete #auto="matAutocomplete"
-      (optionSelected)="onOptionSelected($event)">
-      @for (employee of employees; track employee.firstName) {
-        <mat-option [value]="employee.firstName + ' ' + employee.lastName">
-          {{ employee.firstName }} {{ employee.lastName }}
-        </mat-option>
-      }
-      @if (employees.length === 0 && searchTerm.trim().length >= 2 && hasSearched) {
-        <mat-option disabled>No employees found</mat-option>
-      }
-    </mat-autocomplete>
-    @if (searchTerm.trim().length > 0 && searchTerm.trim().length < 2) {
-        <mat-hint style="color: red;">Type at least 2 characters to search</mat-hint>
-      }
-  </mat-form-field>
+        <button mat-flat-button color="primary" matSuffix (click)="onSearch(trigger)"
+            [disabled]="searchTerm.trim().length < 2" aria-label="Search" class="filled-search-btn">
+            <h2>GO!</h2>
+        </button>
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+            @for (employee of employees; track employee.firstName) {
+            <mat-option [value]="employee.firstName + ' ' + employee.lastName">
+                {{ employee.firstName }} {{ employee.lastName }}
+            </mat-option>
+            }
+            @if (employees.length === 0 && searchTerm.trim().length >= 2 && hasSearched) {
+            <mat-option disabled>No employees found</mat-option>
+            }
+        </mat-autocomplete>
+        @if (searchTerm.trim().length > 0 && searchTerm.trim().length < 2) { <mat-hint style="color: red;">Type at least
+            2 characters to search</mat-hint>
+            }
+    </mat-form-field>
 </div>
