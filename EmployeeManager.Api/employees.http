@@ -11,11 +11,11 @@ POST http://localhost:5063/employees
 Content-Type: application/json
 
 {
-    "firstName": "Paul",
-    "lastName": "Tall",
-    "jobTitle": "Developer",
-    "phone": "07722543768",
-    "email": "paul.tall@exmaple.com"
+    "firstName": "Bob",
+    "lastName": "Bo",
+    "jobTitle": "IT",
+    "phone": "07070707070",
+    "email": "bobbob02@gmail.com"
 }
 
 ###

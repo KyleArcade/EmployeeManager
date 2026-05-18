@@ -30,18 +30,33 @@ export class EmployeeFormDialog {
     private dialogRef: MatDialogRef<EmployeeFormDialog>
   ) {
     this.employeeForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      jobTitle: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
+      firstName: ['', {
+        validators: [Validators.required, Validators.minLength(2)],
+        updateOn: 'change' // <-- Forces real-time validation checks
+      }],
+      lastName: ['', {
+        validators: [Validators.required, Validators.minLength(2)],
+        updateOn: 'change'
+      }],
+      jobTitle: ['', {
+        validators: [Validators.required, Validators.minLength(3)],
+        updateOn: 'change'
+      }],
+      phone: ['', {
+        validators: [Validators.required, Validators.minLength(10)],
+        updateOn: 'change'
+      }],
+      email: ['', {
+        validators: [Validators.required, Validators.email],
+        updateOn: 'change'
+      }]
     });
   }
 
   onSubmit(): void {
     if (this.employeeForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
-      
+
       this.employeeService.createEmployee(this.employeeForm.value).subscribe({
         next: (createdEmployee) => {
           this.isSubmitting = false;
