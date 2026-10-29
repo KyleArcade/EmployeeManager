@@ -6,10 +6,10 @@
         <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
             <input matInput formControlName="firstName">
-            @if (employeeForm.get('firstName')?.hasError('required') && employeeForm.get('firstName')?.touched) {
+            @if (showFirstNameRequired()) {
             <mat-error>First name is required</mat-error>
             }
-            @if (employeeForm.get('firstName')?.hasError('minlength')) {
+            @if (showFirstNameMinLength()) {
             <mat-error>First name must be at least 2 characters long</mat-error>
             }
         </mat-form-field>
@@ -17,10 +17,10 @@
         <mat-form-field appearance="outline">
             <mat-label>Last Name</mat-label>
             <input matInput formControlName="lastName">
-            @if (employeeForm.get('lastName')?.hasError('required') && employeeForm.get('lastName')?.touched) {
+            @if (showLastNameRequired()) {
             <mat-error>Last name is required</mat-error>
             }
-            @if (employeeForm.get('lastName')?.hasError('minlength')) {
+            @if (showLastNameMinLength()) {
             <mat-error>Last name must be at least 2 characters long</mat-error>
             }
         </mat-form-field>
@@ -28,10 +28,10 @@
         <mat-form-field appearance="outline">
             <mat-label>Job Title</mat-label>
             <input matInput formControlName="jobTitle">
-            @if (employeeForm.get('jobTitle')?.hasError('required') && employeeForm.get('jobTitle')?.touched) {
+            @if (showJobTitleRequired()) {
             <mat-error>Job title is required</mat-error>
             }
-            @if (employeeForm.get('jobTitle')?.hasError('minlength')) {
+            @if (showJobTitleMinLength()) {
             <mat-error>Job title must be at least 3 characters long</mat-error>
             }
         </mat-form-field>
@@ -39,10 +39,10 @@
         <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
             <input matInput formControlName="phone">
-            @if (employeeForm.get('phone')?.hasError('required') && employeeForm.get('phone')?.touched) {
+            @if (showPhoneRequired()) {
             <mat-error>Phone number is required</mat-error>
             }
-            @if (employeeForm.get('phone')?.hasError('minlength') ) {
+            @if (showPhoneMinLength()) {
             <mat-error>Phone number must be at least 10 characters long</mat-error>
             }
         </mat-form-field>
@@ -50,13 +50,11 @@
         <mat-form-field appearance="outline">
             <mat-label>Email Address</mat-label>
             <input matInput type="email" formControlName="email">
-            @if (employeeForm.get('email')?.touched) {
-            @if (employeeForm.get('email')?.hasError('required')) {
+            @if (showEmailRequired()) {
             <mat-error>Email is required</mat-error>
             }
-            @if (employeeForm.get('email')?.hasError('email')) {
+            @if (showEmailInvalid()) {
             <mat-error>Please enter a valid email address</mat-error>
-            }
             }
         </mat-form-field>
 
@@ -64,8 +62,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()" [disabled]="isSubmitting">Cancel</button>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="employeeForm.invalid || isSubmitting">
-        {{ isSubmitting ? 'Creating...' : 'Create' }}
+    <button mat-button (click)="onCancel()" [disabled]="isSubmitting()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!canSubmit()">
+        {{ submitButtonText() }}
     </button>
 </mat-dialog-actions>

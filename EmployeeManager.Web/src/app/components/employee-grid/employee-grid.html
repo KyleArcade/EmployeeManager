@@ -1,7 +1,7 @@
 <div class="grid-container">
-  @if (employees.length > 0) {
-  <mat-grid-list cols="3" rowHeight="120px" gutterSize="16px">
-    @for (emp of employees; track emp.id) {
+  @if (hasEmployees()) {
+  <mat-grid-list [cols]="columns()" rowHeight="120px" gutterSize="16px">
+    @for (emp of employees(); track emp.id) {
     <mat-grid-tile>
       <mat-card class="employee-tile-card">
         <div class="card-content-layout">

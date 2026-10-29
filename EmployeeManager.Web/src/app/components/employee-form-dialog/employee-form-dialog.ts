@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +23,26 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class EmployeeFormDialog {
   employeeForm: FormGroup;
-  isSubmitting = false;
+  readonly isSubmitting = signal(false);
+  readonly canSubmit = computed(() => {
+    this.formStateVersion();
+    return !this.employeeForm.invalid && !this.isSubmitting();
+  });
+  readonly submitButtonText = computed(() => this.isSubmitting() ? 'Creating...' : 'Create');
+
+  readonly showFirstNameRequired = computed(() => this.hasError('firstName', 'required', true));
+  readonly showFirstNameMinLength = computed(() => this.hasError('firstName', 'minlength'));
+  readonly showLastNameRequired = computed(() => this.hasError('lastName', 'required', true));
+  readonly showLastNameMinLength = computed(() => this.hasError('lastName', 'minlength'));
+  readonly showJobTitleRequired = computed(() => this.hasError('jobTitle', 'required', true));
+  readonly showJobTitleMinLength = computed(() => this.hasError('jobTitle', 'minlength'));
+  readonly showPhoneRequired = computed(() => this.hasError('phone', 'required', true));
+  readonly showPhoneMinLength = computed(() => this.hasError('phone', 'minlength'));
+  readonly showEmailRequired = computed(() => this.hasError('email', 'required', true));
+  readonly showEmailInvalid = computed(() => this.hasError('email', 'email', true));
+
+  private readonly formStateVersion = signal(0);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private fb: FormBuilder,
@@ -51,20 +71,24 @@ export class EmployeeFormDialog {
         updateOn: 'change'
       }]
     });
+
+    this.employeeForm.events
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.formStateVersion.update(version => version + 1));
   }
 
   onSubmit(): void {
-    if (this.employeeForm.valid && !this.isSubmitting) {
-      this.isSubmitting = true;
+    if (this.canSubmit()) {
+      this.isSubmitting.set(true);
 
       this.employeeService.createEmployee(this.employeeForm.value).subscribe({
         next: (createdEmployee) => {
-          this.isSubmitting = false;
+          this.isSubmitting.set(false);
           this.dialogRef.close(createdEmployee); // Pass back the new employee to add to the grid
         },
         error: (err) => {
           console.error('Failed to create employee', err);
-          this.isSubmitting = false;
+          this.isSubmitting.set(false);
           alert('An error occurred while creating the employee.');
         }
       });
@@ -73,5 +97,11 @@ export class EmployeeFormDialog {
 
   onCancel(): void {
     this.dialogRef.close(); // Close window without making changes
+  }
+
+  private hasError(controlName: string, errorCode: string, requireTouched = false): boolean {
+    this.formStateVersion();
+    const control = this.employeeForm.get(controlName);
+    return !!control?.hasError(errorCode) && (!requireTouched || !!control.touched);
   }
 }
